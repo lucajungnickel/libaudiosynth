@@ -62,10 +62,10 @@ int main(int argc, char** args) {
     printf("Soundfile created: %s\n", file);
     
     //write to file:
-    float sound_len = 1; //in s
+    float sound_len = 2; //in s
     float* buf = calloc(samplerate * sound_len, sizeof(float));
     float* buf2 = calloc(samplerate * sound_len, sizeof(float));
-    //gen_sin(10, sound_len, MAX_AMPLITUDE, samplerate, buf);
+
     float attack = 1.0f;
     float attack_height = 1.0f;
     float decay = 0.2f;
@@ -73,23 +73,20 @@ int main(int argc, char** args) {
     float sustain_height = 0.5f;
     float release = 0.7f;
     
-    //gen_exp_adsr(attack, attack_height, decay, sustain, sustain_height, release, samplerate, buf2);
+    gen_exp_adsr(attack, attack_height, decay, sustain, sustain_height, release, samplerate, buf2);
 
-    //multiplyFloatArrays(buf, buf2, samplerate * 2);
-
-    harmony* h = gen_fifths(100, 5, true);
-    int r = gen_sound_sin_harmonies(sound_len, samplerate, MAX_AMPLITUDE, h, buf);
-    printf("%i\n", r);
+    harmony* h = gen_fifths(50, 5, true);
     
-    //multiplyFloatArrayConstant(buf, samplerate * sound_len, 2);
-    //addFloatArrayConstant(buf, samplerate * sound_len, -1);
+    int r = gen_sound_sin_harmonies(sound_len, samplerate, MAX_AMPLITUDE, h, buf);
+    
+    multiplyFloatArrays(buf, buf2, samplerate * sound_len);
 
+    //Write file
     int res = psf_sndWriteFloatFrames(fd, buf, samplerate * sound_len);
     if (res < 0) {
       printf("Error: %i\n",res);
       return 1;
     }
-
     printf("Wrote file\n");
 
     free(buf);

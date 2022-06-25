@@ -1,8 +1,9 @@
 make:
-	gcc -g -Wall sawtooth.c -Llib -lportsf -lm -o sawtooth
-	#-L lib looks in the /lib/ folder for librarys
-	#-l portsf links this library
+	gcc lib/portsf.c lib/ieee80.c *.c -lm -g -o demo_libaudiosynth
 	#-lm links math library
 start:
 	make
-	./Sawtooth
+	./demo_libaudiosynth
+clean:
+	rm demo_libaudiosynth
+	rm output.wav
