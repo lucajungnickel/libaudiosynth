@@ -1,5 +1,5 @@
 # libaudiosynth
-A lightweight and small audio synthesizing library for creating additive sounds in C
+A lightweight and small audio synthesizing library for creating additive sounds in C.
 
 ## Usage and demo:
 ```
